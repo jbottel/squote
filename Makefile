@@ -1,5 +1,5 @@
 Main:
-	g++ tinyxml2/tinyxml2.cpp StockQuote.cpp -o squote -I/usr/local/include/cpp-netlib -lboost_regex -lboost_date_time -lboost_thread -lboost_system -lcppnetlib-client-connections -lcppnetlib-uri -lssl -lcrypt	-pthread
+	clang++-3.5 -std=c++11 tinyxml2/tinyxml2.cpp StockQuote.cpp -o squote -I/usr/local/include/cpp-netlib -lboost_regex -lboost_date_time -lboost_thread -lboost_system -lcppnetlib-client-connections -lcppnetlib-uri -lssl -lcrypt	-pthread
 
 
 OldOne:
