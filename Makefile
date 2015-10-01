@@ -1,8 +1,26 @@
-Main:
-	clang++-3.5 -std=c++11 tinyxml2/tinyxml2.cpp StockQuote.cpp StockQuoteGenerator.cpp main.cpp -o squote -I/usr/local/include/cpp-netlib -lboost_regex -lboost_date_time -lboost_thread -lboost_system -lcppnetlib-client-connections -lcppnetlib-uri -lssl -lcrypt -pthread
+COMPILER=clang++-3.5
+FLAGS=-std=c++11 -Wall
+CMPL_CMD=$(COMPILER) $(FLAGS)
+LNK_FLAGS=-I/usr/local/include/cpp-netlib -lboost_regex -lboost_date_time -lboost_thread -lboost_system -lcppnetlib-client-connections -lcppnetlib-uri -lssl -lcrypt -pthread
+LNK_CMD=$(LNK_FLAGS)
 
 
-OldOne:
-	g++ StockQuote.cpp -o squote -lboost_system -lboost_thread -pthread -lssl -lcrypt
-	
+squote: StockQuoteGenerator.o StockQuote.o tinyxml2.o main.o
+	$(CMPL_CMD) main.o StockQuote.o StockQuoteGenerator.o tinyxml2.o -o squote $(LNK_CMD)
 
+main.o: StockQuote.o StockQuoteGenerator.o
+	$(CMPL_CMD) -c main.cpp
+
+StockQuoteGenerator.o: StockQuote.o
+	$(CMPL_CMD) -c StockQuoteGenerator.cpp
+
+StockQuote.o: StockQuote.cpp StockQuote.hpp
+	$(CMPL_CMD) -c StockQuote.cpp
+
+tinyxml2.o: tinyxml2/tinyxml2.cpp
+	$(CMPL_CMD) -c tinyxml2/tinyxml2.cpp
+
+
+clean:
+	rm *.o
+	rm squote
