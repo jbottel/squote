@@ -9,6 +9,7 @@
 int main(int argc, char** argv) {
 
 	try {
+		// Set up program options for boost::program_options
 		namespace po = boost::program_options;
 		po::options_description options_desc;
 		po::options_description desc("Program Options");
@@ -18,11 +19,13 @@ int main(int argc, char** argv) {
 			("long,l", "show long detailed view")
 			("show-name,n", "show names as well as symbols")
 			;
+		// Create hidden options to be used for positional options later
 		po::options_description hidden("Hidden options");
 		hidden.add_options()
 			("symbol", po::value< std::vector<std::string> >(), "selected stock symbols")
 			;
 
+		// Add both sets of options to the description to ensure they get displayed
 		options_desc.add(hidden).add(desc);
 
 		po::positional_options_description p;
@@ -40,6 +43,7 @@ int main(int argc, char** argv) {
 
 		if(vm.count("symbol")){
 			std::vector<std::string> symbols = vm["symbol"].as<std::vector<std::string>>();
+			// Loop through all of the positional "symbol" arguments
 			for(int i=0; i<symbols.size(); i++) {
 				std::string symbol = symbols[i];
 				try {
@@ -49,6 +53,7 @@ int main(int argc, char** argv) {
 						continue;
 					}
 					if (vm.count("detail")) {
+						// Display field names every 5th quote.
 						if (i % 5 == 0) {
 							std::cout << std::string(74, '-') << std::endl;
 							std::cout <<  boost::format("%-7s %7s %7s %8s %7s %7s %7s %7s %9s") 
