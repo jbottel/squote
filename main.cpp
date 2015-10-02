@@ -1,12 +1,77 @@
 #include <string>
 #include <iostream>
 #include <boost/format.hpp>
+#include <boost/program_options.hpp>
 #include "StockQuote.hpp"
 #include "StockQuoteGenerator.hpp"
 
 int main(int argc, char** argv) {
-	for (int i = 1; i < argc; i++) {
-		StockQuote sq = StockQuoteGenerator::generateStockQuote(argv[i]);
-		std::cout <<  boost::format("%-5s %7.2f  %+7.2f (%+5.2f%%)") % sq.symbol % sq.price % sq.change % sq.chg_percent << std::endl;
+
+	try {
+		namespace po = boost::program_options;
+		po::options_description options_desc;
+		po::options_description desc("Program Options");
+		desc.add_options()
+			("help,h", "produce help message")
+			("detail,d", "show detailed view")
+			;
+		po::options_description hidden("Hidden options");
+		hidden.add_options()
+			("symbol", po::value< std::vector<std::string> >(), "selected stock symbols")
+			;
+
+		options_desc.add(hidden).add(desc);
+
+		po::positional_options_description p;
+		p.add("symbol", -1);
+
+		po::variables_map vm;
+		po::store(po::command_line_parser(argc, argv).options(options_desc).positional(p).run(), vm);
+		po::notify(vm); 
+
+		if (vm.count("help")) {
+			std::cout << "Usage: " << argv[0] << ": [options] symbol...]" << std::endl;
+			std::cout << desc << std::endl;
+			return 1;
+		}
+
+		if(vm.count("symbol")){
+			std::vector<std::string> symbols = vm["symbol"].as<std::vector<std::string>>();
+			for(int i=0; i<symbols.size(); i++) {
+				std::string symbol = symbols[i];
+				try {
+					StockQuote sq = StockQuoteGenerator::generateStockQuote(symbol);
+					if (vm.count("detail")) {
+						if (i % 5 == 0) {
+							std::cout << std::string(74, '-') << std::endl;
+							std::cout <<  boost::format("%-7s %7s %7s %8s %7s %7s %7s %7s %9s") 
+								% "SYMBOL" % "PRICE" % "CHG" % "CHG%" % "DLOW" % "DHIGH" % "YLOW" % "YHIGH" % "VOLUME" << std::endl;
+							std::cout << std::string(74, '-') << std::endl;
+						}
+						std::cout <<  boost::format("%-7s %7.2f %+7.2f %+7.2f%% %7.2f %7.2f %7.2f %7.2f %9.0f") 
+							% sq.symbol % sq.price % sq.change % sq.chg_percent % sq.day_low % sq.day_high % sq.year_low % sq.year_high % sq.volume  << std::endl;
+					}
+					else {
+						std::cout <<  boost::format("%-5s %7.2f  %+7.2f (%+5.2f%%)") % sq.symbol % sq.price % sq.change % sq.chg_percent << std::endl;
+					}
+				}
+				catch(std::exception& e) { 
+					std::cerr << "Could not retrieve: " << symbol << std::endl; 
+				}
+
+			}
+		}
+		else {
+			std::cout << "You must specify one or more stock symbols." << std::endl;
+			return 1;
+		}
+
+
 	}
+
+	catch(std::exception& e) { 
+		std::cerr <<  e.what() << std::endl; 
+		return 2; 
+
+	} 
 }
