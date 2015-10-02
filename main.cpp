@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
 		desc.add_options()
 			("help,h", "produce help message")
 			("detail,d", "show detailed view")
+			("show-name,n", "show names as well as symbols")
 			;
 		po::options_description hidden("Hidden options");
 		hidden.add_options()
@@ -48,10 +49,12 @@ int main(int argc, char** argv) {
 								% "SYMBOL" % "PRICE" % "CHG" % "CHG%" % "DLOW" % "DHIGH" % "YLOW" % "YHIGH" % "VOLUME" << std::endl;
 							std::cout << std::string(74, '-') << std::endl;
 						}
+						if (vm.count("show-name")) std::cout << sq.name << std::endl;
 						std::cout <<  boost::format("%-7s %7.2f %+7.2f %+7.2f%% %7.2f %7.2f %7.2f %7.2f %9.0f") 
 							% sq.symbol % sq.price % sq.change % sq.chg_percent % sq.day_low % sq.day_high % sq.year_low % sq.year_high % sq.volume  << std::endl;
 					}
 					else {
+						if (vm.count("show-name")) std::cout << sq.name << std::endl;
 						std::cout <<  boost::format("%-5s %7.2f  %+7.2f (%+5.2f%%)") % sq.symbol % sq.price % sq.change % sq.chg_percent << std::endl;
 					}
 				}
