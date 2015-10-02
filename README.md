@@ -29,8 +29,8 @@ The makefile is configured to compile squote on a linux system using clang++-3.5
 - libcppnetlib
 - libssl
 - libboost-thread
-- libbost-program-options
-- libbbost-system
+- libboost-program-options
+- libboost-system
 - libboost-regex
 
 
