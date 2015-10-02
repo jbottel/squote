@@ -11,7 +11,7 @@ squote: StockQuoteGenerator.o StockQuote.o tinyxml2.o main.o
 main.o: StockQuote.o StockQuoteGenerator.o main.cpp
 	$(CMPL_CMD) -c main.cpp
 
-StockQuoteGenerator.o: StockQuote.o
+StockQuoteGenerator.o: StockQuote.o StockQuoteGenerator.cpp
 	$(CMPL_CMD) -c StockQuoteGenerator.cpp
 
 StockQuote.o: StockQuote.cpp StockQuote.hpp
