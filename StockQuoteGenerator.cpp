@@ -17,6 +17,11 @@ namespace StockQuoteGenerator {
 
 		tinyxml2::XMLElement* resourceElement = doc.FirstChildElement("list")->FirstChildElement("resources")->FirstChildElement("resource");
 
+		if (resourceElement == nullptr) {
+			StockQuote sq(0,0,0,0,"","FAILED",0,request_symbol,0,"","", 0, 0, 0);
+			return sq;
+		}
+
 		double change; double chg_percent; double day_high; double day_low; double price; double ts; double volume; double year_high; double year_low;
 		std::string issuer_name; std::string name; std::string symbol; std::string type; std::string utctime;
 		for(tinyxml2::XMLElement* e = resourceElement->FirstChildElement("field"); e != NULL; e = e->NextSiblingElement("field")) {
@@ -39,6 +44,9 @@ namespace StockQuoteGenerator {
 		StockQuote sq(change, chg_percent, day_high, day_low, issuer_name, name, price, symbol, ts, type, utctime, volume, year_high, year_low);
 
 		return sq;
+
+
+		
 	}
 
 }

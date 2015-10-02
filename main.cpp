@@ -44,6 +44,10 @@ int main(int argc, char** argv) {
 				std::string symbol = symbols[i];
 				try {
 					StockQuote sq = StockQuoteGenerator::generateStockQuote(symbol);
+					if (sq.name == "FAILED") {
+						std::cerr << "Could not retrieve: " << sq.symbol << std::endl;	
+						continue;
+					}
 					if (vm.count("detail")) {
 						if (i % 5 == 0) {
 							std::cout << std::string(74, '-') << std::endl;
