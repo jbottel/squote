@@ -32,6 +32,7 @@ The makefile is configured to compile squote on a linux system using clang++-3.5
 - libboost-program-options
 - libboost-system
 - libboost-regex
+- libboost-test-dev
 
 
 Stock Market Data

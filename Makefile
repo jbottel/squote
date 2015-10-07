@@ -20,7 +20,13 @@ StockQuote.o: StockQuote.cpp StockQuote.hpp
 tinyxml2.o: tinyxml2/tinyxml2.cpp
 	$(CMPL_CMD) -c tinyxml2/tinyxml2.cpp
 
+test: test.o StockQuote.o
+	$(CMPL_CMD) test.o StockQuote.o -o test
+
+test.o: test.cpp
+	$(CMPL_CMD) -c test.cpp 
 
 clean:
 	rm *.o
 	rm squote
+	rm test
