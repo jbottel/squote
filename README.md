@@ -1,6 +1,8 @@
 squote
 ======================
 
+[![Build Status](https://travis-ci.org/jbottel/squote.svg?branch=master)](https://travis-ci.org/jbottel/squote)
+
 ``squote`` is a simple command line application to display quotes from the stock market. It is intended for system administrators or programmers who work on the command line but may also have a hobby of following/investing in the markets and would like to quickly check without needing to go to a browser window. Here's an example of a simple use of squote:
 
 ### Simple Quotes

@@ -1,9 +1,11 @@
 language: cpp
 
 before_install:
+          # Add the boost-latest ppa because Travis CI Build environment is OLD.
         - sudo add-apt-repository ppa:boost-latest/ppa --yes
         - sudo apt-get update -qq
         - sudo apt-get install libboost1.55-all-dev
+          # Also since Travis CI build environment is OLD, we have to compile cpp-netlib from scratch!
         - wget http://downloads.cpp-netlib.org/0.11.2/cpp-netlib-0.11.2-final.tar.gz
         - tar xvzf cpp-netlib-0.11.2-final.tar.gz
         - cd cpp-netlib-0.11.2-final
