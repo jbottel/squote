@@ -1,6 +1,5 @@
 #include <string>
 #include <iostream>
-#include <iomanip>
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include "StockQuote.hpp"
@@ -55,31 +54,17 @@ int main(int argc, char** argv) {
 					if (vm.count("detail")) {
 						// Display field names every 5th quote.
 						if (i % 5 == 0) {
-							std::cout << std::string(74, '-') << std::endl;
-							std::cout <<  boost::format("%-7s %7s %7s %8s %7s %7s %7s %7s %9s") 
-								% "SYMBOL" % "PRICE" % "CHG" % "CHG%" % "DLOW" % "DHIGH" % "YLOW" % "YHIGH" % "VOLUME" << std::endl;
-							std::cout << std::string(74, '-') << std::endl;
+							std::cout << sq.detailStringLabels();
 						}
 						if (vm.count("show-name")) std::cout << sq.name << std::endl;
-						std::cout <<  boost::format("%-7s %7.2f %+7.2f %+7.2f%% %7.2f %7.2f %7.2f %7.2f %9.0f") 
-							% sq.symbol % sq.price % sq.change % sq.chg_percent % sq.day_low % sq.day_high % sq.year_low % sq.year_high % sq.volume  << std::endl;
+						std::cout << sq.toStringDetail() << std::endl;
 					}
 					else if (vm.count("long")) {
-						std::cout << std::fixed << std::setprecision(2)
-						<< "Name: " << sq.name << std::endl 
-						<< "Symbol: " << sq.symbol << std::endl 
-						<< "Price: " << sq.price << std::endl 
-						<< "Change: " << sq.change << std::endl 
-						<< "Change (%): " << sq.chg_percent << std::endl 
-						<< "Day Low: " << sq.day_low << std::endl 
-						<< "Day High: " << sq.day_high << std::endl 
-						<< "Year Low: " << sq.year_low << std::endl 
-						<< "Year High: " << sq.year_high << std::endl 
-						<< "Volume: " << sq.volume << std::endl;
+						std::cout << sq.toStringLong() << std::endl;
 					}
 					else {
 						if (vm.count("show-name")) std::cout << sq.name << std::endl;
-						std::cout <<  boost::format("%-5s %7.2f  %+7.2f (%+5.2f%%)") % sq.symbol % sq.price % sq.change % sq.chg_percent << std::endl;
+						std::cout << sq.toStringSimple() << std::endl;
 					}
 				}
 				catch(std::exception& e) { 
