@@ -17,4 +17,4 @@ compiler:
         - clang++
         - g++
 
-script: make && make test && ./test
+script: make && make test
