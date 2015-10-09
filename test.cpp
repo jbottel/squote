@@ -22,9 +22,17 @@ BOOST_AUTO_TEST_CASE (StockQuoteConstruction) {
 }
 
 BOOST_AUTO_TEST_CASE (StockQuoteToSimpleString) {
-	StockQuote s(-0.54,-4.3,33.53,17.23,"Testing Industries","Testing Inc.",22.42,"TSTI",2322.0,"equity","2015-01-01T00:00:01+0000",4573658,35.23,15.53); BOOST_REQUIRE(s.change == -0.54);
+	StockQuote s(-0.54,-4.3,33.53,17.23,"Testing Industries","Testing Inc.",22.42,"TSTI",2322.0,"equity","2015-01-01T00:00:01+0000",4573658,35.23,15.53); 
+	BOOST_REQUIRE(s.change == -0.54);
 	BOOST_REQUIRE_EQUAL(s.toStringSimple(), "TSTI    22.42    -0.54 (-4.30%)");
 }
+
+BOOST_AUTO_TEST_CASE (StockQuoteToDetailedString) {
+	StockQuote s(0.54,4.3,33.53,17.23,"Testing Industries","Testing Inc.",25.20,"TSTI",2322.0,"equity","2015-01-01T00:00:01+0000",4573658,35.23,15.53); 
+	BOOST_REQUIRE(s.change == 0.54);
+	BOOST_REQUIRE_EQUAL(s.toStringDetail(), "TSTI      25.20   +0.54   +4.30%   17.23   33.53   15.53   35.23   4573658");
+}
+
 
 
 
