@@ -5,11 +5,11 @@ LNK_FLAGS=-I/usr/local/include/cpp-netlib -lboost_regex -lboost_date_time -lboos
 LNK_CMD=$(LNK_FLAGS)
 
 
-squote: StockQuoteGenerator.o StockQuote.o tinyxml2.o main.o
-	$(CMPL_CMD) main.o StockQuote.o StockQuoteGenerator.o tinyxml2.o -o squote $(LNK_CMD)
+squote: StockQuoteGenerator.o StockQuote.o tinyxml2.o squote.o
+	$(CMPL_CMD) squote.o StockQuote.o StockQuoteGenerator.o tinyxml2.o -o squote $(LNK_CMD)
 
-main.o: StockQuote.o StockQuoteGenerator.o main.cpp
-	$(CMPL_CMD) -c main.cpp
+squote.o: StockQuote.o StockQuoteGenerator.o squote.cpp
+	$(CMPL_CMD) -c squote.cpp
 
 StockQuoteGenerator.o: StockQuote.o StockQuoteGenerator.cpp
 	$(CMPL_CMD) -c StockQuoteGenerator.cpp
