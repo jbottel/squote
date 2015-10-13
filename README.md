@@ -37,6 +37,14 @@ The makefile is configured to compile squote on a linux system using clang++-3.5
 - libboost-test-dev
 
 
+Tests
+--------------
+``squote`` is tested using the ``Boost.Test`` unit testing framework, compatible with the ``xUnit`` architecture. You can run the tests by running:
+```
+make test
+./test
+```
+
 Stock Market Data
 --------------
 Market data is extracted from the public Yahoo! Finance API and ``squote`` should support any symbol that is supported by this API, certainly most symbols on NYSE and NASDAQ. This information is known to sometimes be up to 15 minutes old.
