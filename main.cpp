@@ -35,8 +35,8 @@ int main(int argc, char** argv) {
 		po::notify(vm); 
 
 		if (vm.count("help")) {
-			std::cout << "Usage: " << argv[0] << ": [options] symbol..." << std::endl;
-			std::cout << desc << std::endl;
+			std::cerr << "Usage: " << argv[0] << ": [options] symbol..." << std::endl;
+			std::cerr << desc << std::endl;
 			return 1;
 		}
 
@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
 			}
 		}
 		else {
-			std::cout << "You must specify one or more stock symbols. (-h for help)" << std::endl;
+			std::cerr << "You must specify one or more stock symbols. (-h for help)" << std::endl;
 			return 1;
 		}
 
